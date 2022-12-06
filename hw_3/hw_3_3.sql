@@ -7,6 +7,10 @@ select track_name, track_length from tracks
 order by track_length desc 
 limit 1;
 
+--второй вариант:
+SELECT track_name, track_length FROM tracks WHERE 
+    track_length = (SELECT MAX(track_length) FROM tracks);
+
 -- название треков, продолжительность которых не менее 3,5 минуты;
 select track_name from tracks
 where track_length >= 210;
