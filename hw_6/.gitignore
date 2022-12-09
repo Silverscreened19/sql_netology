@@ -1,0 +1,6 @@
+__pycache__/
+test.py
+connection.py
+.vscode/
+__pycache__/models.cpython-311.pyc
+models.cpython-311.pyc

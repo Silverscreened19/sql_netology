@@ -1,14 +1,8 @@
 import sqlalchemy as sq
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
-
-
-class Publisher(Base):
-    __tablename__ = 'publisher'
-
-    id = sq.Column(sq.Integer, primary_key=True)
-    name = sq.Column(sq.String(length=80), unique=True)
 
 
 class Book(Base):
@@ -19,7 +13,14 @@ class Book(Base):
     id_publisher = sq.Column(sq.Integer, sq.ForeignKey(
         'publisher.id'), nullable=False)
 
-    publisher = relationship(Publisher, backref='book')
+
+class Publisher(Base):
+    __tablename__ = 'publisher'
+
+    id = sq.Column(sq.Integer, primary_key=True)
+    name = sq.Column(sq.String(length=80), unique=True)
+
+    book = relationship(Book, backref='publisher')
 
 
 class Shop(Base):
@@ -45,7 +46,7 @@ class Sale(Base):
     __tablename__ = 'sale'
 
     id = sq.Column(sq.Integer, primary_key=True)
-    price = sq.Column(sq.Numeric(4, 2), nullable=False)
+    price = sq.Column(sq.Float, nullable=False)
     date_sale = sq.Column(sq.Date, nullable=False)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey('stock.id'), nullable=False)
     count = sq.Column(sq.Integer, nullable=True)
